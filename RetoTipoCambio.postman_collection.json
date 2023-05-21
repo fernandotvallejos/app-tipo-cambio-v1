@@ -1,0 +1,278 @@
+{
+	"info": {
+		"_postman_id": "884008e5-dfb1-43db-a801-30c95324c362",
+		"name": "RetoTipoCambio",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7025901"
+	},
+	"item": [
+		{
+			"name": "Obtener jwt",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var token = postman.getResponseHeader(\"Authorization\");\r",
+							"pm.collectionVariables.set(\"bearerToken\", token.substring(7));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"bdiaz\",\r\n    \"password\":\"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar tipo de cambio",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"monedaOrigen\":\"PEN\",\r\n    \"monedaDestino\":\"MXN\",\r\n    \"valorTipoCambio\":5.10,\r\n    \"fechaAplica\":\"21/03/2023\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/tipo-cambio/agregar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"tipo-cambio",
+						"agregar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todos los tipos de cambio",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/tipo-cambio",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"tipo-cambio"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filtrar Tipo De cambio",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"monedaDestino\":\"MXN\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/tipo-cambio/filtrar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"tipo-cambio",
+						"filtrar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar tipo de cambio",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":1,\r\n    \"monedaOrigen\":\"PEN\",\r\n    \"monedaDestino\":\"MXN\",\r\n    \"valorTipoCambio\":10,\r\n    \"fechaAplica\":\"20/05/2028\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/tipo-cambio/actualizar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"tipo-cambio",
+						"actualizar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Realizar conversion de moneda",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"montoInicial\":10,\r\n    \"idTipoCambio\":1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/tipo-cambio/ejecutar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"tipo-cambio",
+						"ejecutar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener listado de conversiones",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/tipo-cambio/log/listar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"tipo-cambio",
+						"log",
+						"listar"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "bearerToken",
+			"value": ""
+		}
+	]
+}
